@@ -849,11 +849,7 @@ border-radius: 4px;
             <x>0</x>
             <y>0</y>
             <width>379</width>
-<<<<<<< HEAD
-            <height>322</height>
-=======
             <height>309</height>
->>>>>>> 96f906c254d5bddf0399196a46d6e1a73b62571f
            </rect>
           </property>
           <attribute name="label">
@@ -1093,15 +1089,7 @@ border-radius: 4px;
             <x>0</x>
             <y>0</y>
             <width>379</width>
-<<<<<<< HEAD
             <height>321</height>
-=======
-<<<<<<< HEAD
-            <height>321</height>
-=======
-            <height>169</height>
->>>>>>> 96f906c254d5bddf0399196a46d6e1a73b62571f
->>>>>>> c9907af149d6f9a15d532376aefa73f759542f03
            </rect>
           </property>
           <attribute name="label">
@@ -1235,15 +1223,7 @@ border-radius: 4px;
             <x>0</x>
             <y>0</y>
             <width>379</width>
-<<<<<<< HEAD
             <height>321</height>
-=======
-<<<<<<< HEAD
-            <height>321</height>
-=======
-            <height>165</height>
->>>>>>> 96f906c254d5bddf0399196a46d6e1a73b62571f
->>>>>>> c9907af149d6f9a15d532376aefa73f759542f03
            </rect>
           </property>
           <attribute name="label">
@@ -1364,11 +1344,7 @@ border-radius: 4px;
             <x>0</x>
             <y>0</y>
             <width>379</width>
-<<<<<<< HEAD
-            <height>321</height>
-=======
             <height>205</height>
->>>>>>> 96f906c254d5bddf0399196a46d6e1a73b62571f
            </rect>
           </property>
           <attribute name="label">
@@ -1673,8 +1649,6 @@ border-radius: 4px;
        <property name="topMargin">
         <number>11</number>
        </property>
-<<<<<<< HEAD
-=======
        <item row="2" column="0">
         <widget class="QGroupBox" name="groupBox_2">
          <property name="sizePolicy">
@@ -1774,7 +1748,6 @@ border-radius: 4px;
          </layout>
         </widget>
        </item>
->>>>>>> 96f906c254d5bddf0399196a46d6e1a73b62571f
        <item row="1" column="0">
         <widget class="QGroupBox" name="groupBox_8">
          <property name="styleSheet">
@@ -1891,105 +1864,6 @@ border-radius: 4px;
          </layout>
         </widget>
        </item>
-       <item row="2" column="0">
-        <widget class="QGroupBox" name="groupBox_2">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="title">
-          <string>ROI Shape</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_38">
-          <item row="0" column="0">
-           <widget class="QRadioButton" name="rb_rect_roi">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>Rectangle</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QRadioButton" name="rb_elli_roi">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>Ellipse</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QRadioButton" name="rb_poly_roi">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>Polygon</string>
-            </property>
-            <property name="checked">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QRadioButton" name="rb_circle_roi">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>Circle</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QRadioButton" name="rb_line_roi">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>Line</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QPushButton" name="pb_show_roi">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>Zoom to ROI</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
        <item row="4" column="0">
         <widget class="QToolBox" name="toolBox_3">
          <property name="sizePolicy">
@@ -2006,18 +1880,8 @@ border-radius: 4px;
            <rect>
             <x>0</x>
             <y>0</y>
-<<<<<<< HEAD
             <width>361</width>
             <height>193</height>
-=======
-<<<<<<< HEAD
-            <width>361</width>
-            <height>193</height>
-=======
-            <width>340</width>
-            <height>160</height>
->>>>>>> 96f906c254d5bddf0399196a46d6e1a73b62571f
->>>>>>> c9907af149d6f9a15d532376aefa73f759542f03
            </rect>
           </property>
           <attribute name="label">
@@ -2220,18 +2084,8 @@ border-radius: 4px;
            <rect>
             <x>0</x>
             <y>0</y>
-<<<<<<< HEAD
             <width>386</width>
             <height>273</height>
-=======
-<<<<<<< HEAD
-            <width>386</width>
-            <height>273</height>
-=======
-            <width>365</width>
-            <height>280</height>
->>>>>>> 96f906c254d5bddf0399196a46d6e1a73b62571f
->>>>>>> c9907af149d6f9a15d532376aefa73f759542f03
            </rect>
           </property>
           <attribute name="label">
@@ -2534,15 +2388,7 @@ border-radius: 4px;
         </widget>
        </item>
        <item row="5" column="0">
-<<<<<<< HEAD
         <spacer name="verticalSpacer_4">
-=======
-<<<<<<< HEAD
-        <spacer name="verticalSpacer_4">
-=======
-        <spacer name="verticalSpacer_6">
->>>>>>> 96f906c254d5bddf0399196a46d6e1a73b62571f
->>>>>>> c9907af149d6f9a15d532376aefa73f759542f03
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
