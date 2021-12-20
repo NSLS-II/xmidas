@@ -3892,7 +3892,7 @@ if __name__ == "__main__":
     if logger.hasHandlers():
         logger.handlers.clear()
     logger.addHandler(stream_handler)
-
+	QApplication.setAttribute(QtCore.Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
     app = QtWidgets.QApplication(sys.argv)
     # app.setAttribute(QtCore.Qt.AA_Use96Dpi)
     window = midasWindow()
