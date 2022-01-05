@@ -82,9 +82,7 @@ target/
 .ipynb_checkpoints
 
 *.tiff
-*.txt
 *.pptx
 *.png
 *.nor
 *.ipynb
-
