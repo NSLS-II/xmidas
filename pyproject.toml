@@ -1,19 +1,21 @@
 [tool.black]
+line-length = 115
 include = '\.pyi?$'
 exclude = '''
-/(
-    \.git
+(
+    \.eggs         # exclude a few common directories in the
+  | \.git          # root of the project
   | \.hg
   | \.mypy_cache
   | \.tox
   | \.venv
+  | \.pytest_cache
   | _build
   | buck-out
   | build
   | dist
-
-  # The following are specific to Black, you probably don't want those.
-  | blib2to3
-  | tests/data
-)/
+  | docs
+  | xmidas/uis
+  | versioneer.py
+)
 '''
