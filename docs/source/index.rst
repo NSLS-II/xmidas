@@ -10,6 +10,4 @@ XMidas Documentation
    :maxdepth: 2
 
    installation
-   usage
    release-history
-   min_versions
