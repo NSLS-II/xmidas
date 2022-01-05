@@ -11,6 +11,8 @@ recursive-include docs *.rst conf.py Makefile make.bat
 
 include versioneer.py
 include xmidas/_version.py
+recursive-include xmidas/uis *
+recursive-include xmidas/css *
 
 # If including data files in the package, add them like:
 # include path/to/data_file

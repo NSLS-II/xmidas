@@ -40,9 +40,9 @@ setup(
     cmdclass=versioneer.get_cmdclass(),
     description="Multimodal Image Data Analysis Software",
     long_description=readme,
-    author="Brookhaven National Lab",
+    author="Brookhaven National Laboratory",
     author_email="",
-    url="https://github.com/dmgav/xmidas",
+    url="https://github.com/NSLS-II/xmidas",
     python_requires=">={}".format(".".join(str(n) for n in min_version)),
     packages=find_packages(exclude=["docs", "tests"]),
     entry_points={
