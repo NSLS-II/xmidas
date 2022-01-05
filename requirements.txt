@@ -2,13 +2,13 @@
 h5py
 numpy
 pandas
-pyqt5
 pyqtgraph>=0.12.2
 pystackreg
 scikit-image
 scikit-learn
 scipy>=1.7
 tifffile
+silx==0.15.2  # Keep pinned until the newer versions are compatible with xraylarch
 xraylarch>=0.9.57
 pyshortcuts
-opencv-python
+packaging

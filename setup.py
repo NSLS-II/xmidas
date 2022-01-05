@@ -45,8 +45,12 @@ setup(
     url="https://github.com/NSLS-II/xmidas",
     python_requires=">={}".format(".".join(str(n) for n in min_version)),
     packages=find_packages(exclude=["docs", "tests"]),
+    extras_require={
+        "all": ["pyqt5", "opencv-python-headless"],
+    },
     entry_points={
         "console_scripts": [
+            "xmidas = xmidas.main:start_xmidas",
             # 'command = some.module:some_function',
         ],
     },

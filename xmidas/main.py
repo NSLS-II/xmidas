@@ -3,6 +3,7 @@
 # Author: Ajith Pattammattel
 # First Version on:06-23-2020
 
+import argparse
 import logging
 import sys
 import webbrowser
@@ -29,11 +30,14 @@ from skimage import filters
 from sklearn import linear_model
 from larch.xafs import preedge
 from pystackreg import StackReg
+from packaging import version
 
 from PyQt5 import QtWidgets, QtCore, QtGui, uic, QtTest
 from PyQt5.QtGui import QMovie
 from PyQt5.QtWidgets import QMessageBox, QFileDialog, QApplication
-from PyQt5.QtCore import QObject, pyqtSignal, pyqtSlot, QRunnable, QThreadPool
+from PyQt5.QtCore import QObject, pyqtSignal, pyqtSlot, QRunnable, QThreadPool, PYQT_VERSION_STR
+
+from . import __version__
 
 # from MultiChannel import *
 
@@ -4261,7 +4265,16 @@ def modifyStack(
         pass
 
 
-if __name__ == "__main__":
+def start_xmidas():
+    def formatter(prog):
+        # Set maximum width such that printed help mostly fits in the RTD theme code block (documentation).
+        return argparse.RawDescriptionHelpFormatter(prog, max_help_position=20, width=90)
+
+    parser = argparse.ArgumentParser(
+        description=f"XMidas: v{__version__}",
+        formatter_class=formatter,
+    )
+    parser.parse_args()
 
     logger.setLevel(logging.INFO)
     formatter = logging.Formatter(fmt="%(asctime)s : %(levelname)s : %(message)s")
@@ -4271,9 +4284,16 @@ if __name__ == "__main__":
     if logger.hasHandlers():
         logger.handlers.clear()
     logger.addHandler(stream_handler)
-    QApplication.setAttribute(QtCore.Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
+
+    if version.parse(PYQT_VERSION_STR) >= version.parse("5.14"):
+        QApplication.setAttribute(QtCore.Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
+
     app = QtWidgets.QApplication(sys.argv)
     # app.setAttribute(QtCore.Qt.AA_Use96Dpi)
     window = midasWindow()
     window.show()
     sys.exit(app.exec_())
+
+
+if __name__ == "__main__":
+    start_xmidas()
