@@ -73,7 +73,7 @@ target/
 *.swo
 
 #pycharm
-#.idea/
+.idea/
 
 #VSCode
 .vscode/
