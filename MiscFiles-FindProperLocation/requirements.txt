@@ -1,0 +1,14 @@
+h5py
+numpy
+pandas
+pyqt5
+pyqtgraph==0.12.2
+pystackreg
+scikit-image
+scikit-learn
+scipy>=1.7
+tifffile
+xraylarch==0.9.51
+pyshortcuts
+opencv-python
+

@@ -1,0 +1,93 @@
+name: Tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+
+  build:
+    env:
+      DISPLAY: ":99.0"  # arbitrary
+
+    strategy:
+      matrix:
+        host-os: ["ubuntu-latest", "macos-latest", "windows-latest"]
+        python-version: [3.7, 3.8, 3.9]
+      fail-fast: false
+
+    runs-on: ${{ matrix.host-os }}
+
+    defaults:
+      run:
+        shell: bash -l {0}
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        # This step is not expected to influence the test, since the test is run in Conda environment
+        python-version: 3.9
+
+    - uses: conda-incubator/setup-miniconda@v2
+      with:
+        channels: conda-forge
+        channel-priority: flexible
+        auto-update-conda: true
+        show-channel-urls: true
+        allow-softlinks: true
+        auto-activate-base: false
+        activate-environment: testenv
+        use-only-tar-bz2: false
+
+    - name: Install Linux libraries
+      if: runner.os == 'Linux'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y xvfb herbstluftwm
+
+    - name: Start 'xvfb'
+      if: runner.os == 'Linux'
+      run: |
+        sudo /sbin/start-stop-daemon --start --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -screen 0 1920x1200x24 -ac +extension GLX +render -noreset
+        sleep 3
+
+    - name:  Start 'herbstluftwm'
+      if: runner.os == 'Linux'
+      run: |
+        herbstluftwm &
+        sleep 1
+
+    - name: Install Conda packages
+      run: |
+        set -vxeo pipefail
+
+        conda install -y \
+          python=${{ matrix.python-version }} \
+          pip \
+          -c conda-forge
+
+        conda list
+        pip list
+
+    - name: Install PyPI packages
+      run: |
+        set -vxeuo pipefail
+
+        pip install --upgrade pip setuptools
+        pip install codecov
+        pip install -r requirements.txt
+        pip install -r requirements-dev.txt
+        pip install .[all]
+
+        conda list
+        pip list
+        python --version
+
+    - name: Test with pytest
+      run: |
+        set -vxeuo pipefail
+        coverage run -m pytest -vvv
+        coverage report

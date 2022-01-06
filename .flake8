@@ -1,0 +1,12 @@
+[flake8]
+exclude =
+    .git,
+    __pycache__,
+    build,
+    dist,
+    versioneer.py,
+    xmidas/_version.py,
+    docs/source/conf.py
+    xmidas/uis
+max-line-length = 115
+ignore = E203, W503  # There are some errors produced by 'black', therefore unavoidable
