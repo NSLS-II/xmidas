@@ -26,12 +26,12 @@ You can also create a 3D image stack from a selection of single tiff files. To d
 
 
 
-![File_Open](https://github.com/pattammattel/NSLS-II-MIDAS/blob/main/Screenshots/FileOpen.JPG)
+![File_Open](https://github.com/NSLS-II/xmidas/blob/main/MiscFiles-FindProperLocation/Screenshots/FileOpen.JPG)
 
 
 Once loaded correctly you should see the image on the top panel and the spectrum on the bottom panel. In case of incorrect formatting or unsupported formats, the bottom left corner of the program shows the error. 
 
-![Image Open](https://github.com/pattammattel/NSLS-II-MIDAS/blob/main/Screenshots/Midas_view.JPG)
+![Image Open](https://github.com/NSLS-II/xmidas/blob/main/MiscFiles-FindProperLocation/Screenshots/Midas_view.JPG)
 
 
 [Video Tutorial](https://www.youtube.com/watch?v=gGEN52nWLqk)
