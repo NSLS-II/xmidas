@@ -5,11 +5,11 @@
  
  ### XRF Data
  
- MIDAS can unpack fluorescence **.h5 data** from NSLS-II beamlines, HXN, XFM, SRX, and TES.XRF data will be normalized with the I0 (scalar) value on the file. 
+ MIDAS can unpack fluorescence .h5 data from NSLS-II beamlines, HXN, XFM, SRX, and TES.XRF data will be normalized with the I0 (scalar) value on the file. 
  
  ### 2D-XANES Data
  
- 2D and 3D **tiff** images (stacks). The list of energies has to be loaded as a separate tiff file (see load energy section below)
+ 2D and 3D tiff images (stacks). The list of energies has to be loaded as a separate tiff file (see load energy section below)
  
 To open the above data types use the "Open Image Data" option in the File menu and select the file. 
 
