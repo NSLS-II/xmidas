@@ -36,24 +36,6 @@ jobs:
         activate-environment: testenv
         use-only-tar-bz2: false
 
-    - name: Install Linux libraries
-      if: runner.os == 'Linux'
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y xvfb herbstluftwm
-
-    - name: Start 'xvfb'
-      if: runner.os == 'Linux'
-      run: |
-        sudo /sbin/start-stop-daemon --start --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -screen 0 1920x1200x24 -ac +extension GLX +render -noreset
-        sleep 3
-
-    - name:  Start 'herbstluftwm'
-      if: runner.os == 'Linux'
-      run: |
-        herbstluftwm &
-        sleep 1
-
     - name: Install Conda packages
       run: |
         set -vxeo pipefail
