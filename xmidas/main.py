@@ -3759,7 +3759,7 @@ def classify(img_stack, correlation="Pearson"):
         corr[s] = r
 
     cluster_image = np.reshape(corr, (b, c))
-    return (cluster_image ** 3), img_stack_
+    return (cluster_image**3), img_stack_
 
 
 def correlation_kmeans(img_stack, n_clusters, correlation="Pearson"):
@@ -3930,7 +3930,7 @@ def interploate_E(refs, e):
 def getStats(spec, fit, num_refs=2):
     stats = {}
 
-    r_factor = (np.sum(spec - fit) ** 2) / np.sum(spec ** 2)
+    r_factor = (np.sum(spec - fit) ** 2) / np.sum(spec**2)
     stats["R_Factor"] = np.around(r_factor, 5)
 
     y_mean = np.sum(spec) / len(spec)

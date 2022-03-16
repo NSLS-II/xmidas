@@ -4,6 +4,8 @@ on: [push, pull_request]
 
 jobs:
   build:
+    env:
+      DISPLAY: ":99.0"  # arbitrary
 
     runs-on: ubuntu-latest
     strategy:
@@ -11,21 +13,53 @@ jobs:
         python-version: [3.8]
       fail-fast: false
 
+    defaults:
+      run:
+        shell: bash -l {0}
+
     steps:
     - uses: actions/checkout@v2
+
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: 3.9
+
+    - uses: conda-incubator/setup-miniconda@v2
+      with:
+        channels: conda-forge
+        channel-priority: flexible
+        auto-update-conda: true
+        show-channel-urls: true
+        allow-softlinks: true
+        auto-activate-base: false
+        activate-environment: testenv
+        use-only-tar-bz2: false
+
+    - name: Install Conda packages
+      run: |
+        set -vxeo pipefail
+
+        conda install -y \
+          python=${{ matrix.python-version }} \
+          pip \
+          -c conda-forge
+
+        conda list
+        pip list
+
     - name: Install dependencies
       run: |
+        set -vxeuo pipefail
+
         # These packages are installed in the base environment but may be older
         # versions. Explicitly upgrade them because they often create
         # installation problems if out of date.
         python -m pip install --upgrade pip setuptools numpy
 
-        pip install .[all]
+        pip install -r requirements.txt
         pip install -r requirements-dev.txt
+        pip install .[all]
         pip list
     - name: Build Docs
       run: |
