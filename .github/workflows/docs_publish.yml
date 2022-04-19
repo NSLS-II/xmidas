@@ -52,6 +52,7 @@ jobs:
         conda install -y \
           python=${{ matrix.python-version }} \
           pip \
+          xraylarch \
           -c conda-forge
 
         conda list
