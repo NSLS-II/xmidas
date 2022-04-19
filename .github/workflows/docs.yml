@@ -43,8 +43,7 @@ jobs:
         conda install -y \
           python=${{ matrix.python-version }} \
           pip \
-          wxpython \
-          tomopy \
+          xraylarch \
           -c conda-forge
 
         conda list
