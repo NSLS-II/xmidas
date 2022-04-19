@@ -8,7 +8,7 @@ scikit-image
 scikit-learn
 scipy>=1.7
 tifffile
-silx==0.15.2  # Keep pinned until the newer versions are compatible with xraylarch
+silx
 xraylarch>=0.9.57
 pyshortcuts
 packaging
