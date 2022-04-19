@@ -67,6 +67,8 @@ jobs:
         conda install -y \
           python=${{ matrix.python-version }} \
           pip \
+          wxpython \
+          tomopy \
           -c conda-forge
 
         conda list
