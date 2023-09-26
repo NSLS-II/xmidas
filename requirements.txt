@@ -10,5 +10,4 @@ scipy>=1.7
 tifffile
 silx
 xraylarch>=0.9.57
-pyshortcuts
 packaging
