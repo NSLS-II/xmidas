@@ -294,7 +294,6 @@ class midasWindow(QtWidgets.QMainWindow):
         file_name.setFileMode(QFileDialog.ExistingFiles)
         names = file_name.getOpenFileNames(self, "Open files", " ", filter)
         if names[0]:
-
             self.file_name = names[0]
             self.load_stack()
 
@@ -303,7 +302,6 @@ class midasWindow(QtWidgets.QMainWindow):
             pass
 
     def load_stack(self):
-
         """load the image data from the selected file.
         If the the choice is for multiple files stack will be created in a loop.
         If single h5 file is selected the unpacking will be done with 'get_xrf_data' function in StackCalcs.
@@ -340,7 +338,6 @@ class midasWindow(QtWidgets.QMainWindow):
         self.statusbar_main.showMessage("Loading.. please wait...")
 
         if isinstance(self.file_name, list):
-
             all_images = []
 
             for im_file in self.file_name:
@@ -351,7 +348,6 @@ class midasWindow(QtWidgets.QMainWindow):
             self.sb_zrange2.setValue(self.im_stack.shape[0])
 
         else:
-
             if self.file_name.endswith(".h5"):
                 self.im_stack, mono_e, bl_name, self.avgIo = get_xrf_data(self.file_name)
                 self.statusbar_main.showMessage(f"Data from {bl_name}")
@@ -423,7 +419,6 @@ class midasWindow(QtWidgets.QMainWindow):
             pass
 
     def autoEnergyLoader(self):
-
         dir_, filename_ = os.path.split(self.file_name)
         self.efilePath_name = os.path.join(dir_, os.path.splitext(filename_)[0] + ".txt")
         self.efilePath_log = os.path.join(dir_, "maps_log_tiff.txt")
@@ -484,7 +479,6 @@ class midasWindow(QtWidgets.QMainWindow):
         self.change_color_on_load(self.pb_load_align_ref)
 
     def stackRegistration(self):
-
         self.transformations = {
             "TRANSLATION": StackReg.TRANSLATION,
             "RIGID_BODY": StackReg.RIGID_BODY,
@@ -499,9 +493,7 @@ class midasWindow(QtWidgets.QMainWindow):
         self.alignMaxIter = self.sb_maxIterVal.value()
 
         if self.cb_use_tmatFile.isChecked():
-
             if len(self.loaded_tranform_file) > 0:
-
                 self.displayedStack = align_with_tmat(
                     self.displayedStack, tmat_file=self.loaded_tranform_file, transformation=self.transformType
                 )
@@ -511,7 +503,6 @@ class midasWindow(QtWidgets.QMainWindow):
                 logger.error("No Tranformation File Loaded")
 
         elif self.cb_iterAlign.isChecked():
-
             if not self.refStackAvailable:
                 self.alignRefImage = self.displayedStack
             else:
@@ -623,7 +614,6 @@ class midasWindow(QtWidgets.QMainWindow):
             self.hs_bg_threshold.setEnabled(False)
 
         if self.cb_log.isChecked():
-
             self.displayedStack = remove_nan_inf(np.log10(self.displayedStack))
             logger.info("Log Stack is in use")
 
@@ -648,7 +638,6 @@ class midasWindow(QtWidgets.QMainWindow):
     # ImageView
 
     def view_stack(self):
-
         if not self.im_stack.ndim == 3:
             raise ValueError("stack should be an ndarray with ndim == 3")
         else:
@@ -729,9 +718,7 @@ class midasWindow(QtWidgets.QMainWindow):
         self.view_stack()
 
     def efileLoader(self):
-
         if self.efilePath:
-
             if str(self.efilePath).endswith("log_tiff.txt"):
                 self.energy = energy_from_logfile(logfile=str(self.efilePath))
                 logger.info("Log file from pyxrf processing")
@@ -749,7 +736,6 @@ class midasWindow(QtWidgets.QMainWindow):
         # assert len(self.energy) == self.dim1, "Number of Energy Points is not equal to stack length"
 
     def energyUnitCheck(self):
-
         if np.max(self.energy) < 100:
             self.cb_kev_flag.setChecked(True)
             self.energy *= 1000
@@ -777,7 +763,6 @@ class midasWindow(QtWidgets.QMainWindow):
         self.plt_xanes_refs()
 
     def plt_xanes_refs(self):
-
         try:
             self.ref_plot.close()
         except Exception:
@@ -789,7 +774,6 @@ class midasWindow(QtWidgets.QMainWindow):
         self.ref_plot.addLegend()
 
         for n in range(np.shape(self.refs)[1]):
-
             if not n == 0:
                 self.ref_plot.plot(
                     self.refs.values[:, 0],
@@ -828,7 +812,6 @@ class midasWindow(QtWidgets.QMainWindow):
                 self.statusbar_main.showMessage(f"{self.xpixel} and {self.ypixel}")
 
     def setImageROI(self):
-
         self.lineROI = pg.LineSegmentROI([[int(self.dim3 // 2), int(self.dim2 // 2)], [self.sz, self.sz]], pen="r")
 
         self.rectROI = pg.RectROI(
@@ -903,7 +886,6 @@ class midasWindow(QtWidgets.QMainWindow):
         self.spec_roi_math.setBounds([self.xdata[0], self.xdata[-1]])
 
     def update_spectrum(self):
-
         # set x-axis values; array taken from energy values, if clipped z box values will update the array
         self.xdata = self.energy[self.sb_zrange1.value() : self.sb_zrange2.value()]
 
@@ -998,7 +980,6 @@ class midasWindow(QtWidgets.QMainWindow):
             self.spectrum_view.removeItem(self.spec_roi_math)
 
     def spec_roi_calc(self):
-
         self.spec_lo_m, self.spec_hi_m = self.spec_roi_math.getRegion()
         self.spec_lo_m_idx = (np.abs(self.energy - self.spec_lo_m)).argmin()
         self.spec_hi_m_idx = (np.abs(self.energy - self.spec_hi_m)).argmin()
@@ -1024,7 +1005,6 @@ class midasWindow(QtWidgets.QMainWindow):
             self.image_view.setImage(self.disp_img)
 
     def math_img_roi_flag(self):
-
         button_name = self.sender().text()
         logger.info(f"{button_name}")
         if button_name == "Add ROI_2":
@@ -1041,7 +1021,6 @@ class midasWindow(QtWidgets.QMainWindow):
             logger.error("Unknown signal for second ROI")
 
     def image_roi_calc(self):
-
         if self.image_roi2_flag == 1:
             self.calc = {"Divide": np.divide, "Subtract": np.subtract, "Add": np.add}
             self.update_spec_image_roi()
@@ -1050,19 +1029,16 @@ class midasWindow(QtWidgets.QMainWindow):
             return
 
     def update_spec_image_roi(self):
-
         self.math_roi_reg = self.image_roi_math.getArrayRegion(
             self.displayedStack, self.image_view.imageItem, axes=(1, 2)
         )
         if self.math_roi_reg.ndim == 3:
-
             self.math_roi_spectra = get_mean_spectra(self.math_roi_reg)
 
         elif self.roi_img_stk.ndim == 2:
             self.math_roi_spectra = self.math_roi_reg.mean(-1)
 
         if self.cb_img_roi_action.currentText() in self.calc.keys():
-
             calc_spec = self.calc[self.cb_img_roi_action.currentText()](self.mean_spectra, self.math_roi_spectra)
             self.spectrum_view.addLegend()
             self.spectrum_view.plot(
@@ -1084,9 +1060,7 @@ class midasWindow(QtWidgets.QMainWindow):
         self.spectrum_view.addItem(self.spec_roi)
 
     def displayStackInfo(self):
-
         try:
-
             if isinstance(self.file_name, list):
                 info = f"Folder; {os.path.dirname(self.file_name[0])} \n"
                 for n, name in enumerate(self.file_name):
@@ -1162,7 +1136,6 @@ class midasWindow(QtWidgets.QMainWindow):
             )
 
         else:
-
             self.scatter_window = ScatterPlot(self.img1, self.img2, (str(self.corrImg1), str(self.corrImg2)))
 
         # ph = self.geometry().height()
@@ -1175,7 +1148,6 @@ class midasWindow(QtWidgets.QMainWindow):
         self.scatter_window.show()
 
     def plotCorrelationsAllCombinations(self):
-
         self.stackIndexToNames()
         allElemCombNum = list(combinations(np.arange(len(self.elemFileName)), 2))
 
@@ -1208,7 +1180,6 @@ class midasWindow(QtWidgets.QMainWindow):
         }
 
         if len(allElemCombNum) > len(self.scWindowDict):
-
             reply = QMessageBox.warning(
                 self,
                 "Plot Window Limit",
@@ -1221,7 +1192,6 @@ class midasWindow(QtWidgets.QMainWindow):
             )
 
             if reply == QMessageBox.Yes:
-
                 for i, pair in enumerate(allElemCombNum):
                     im1 = self.displayedStack[pair[0]]
                     im2 = self.displayedStack[pair[1]]
@@ -1240,14 +1210,12 @@ class midasWindow(QtWidgets.QMainWindow):
         self.newWindow.show()
 
     def save_stack(self, method="raw"):
-
         # self.update_stack()
         file_name = QFileDialog().getSaveFileName(
             self, "Save image data", "image_data.tiff", "image file(*tiff *tif )"
         )
         if file_name[0]:
             if method == "raw":
-
                 tf.imsave(str(file_name[0]), self.displayedStack)
                 logger.info(f"Updated Image Saved: {str(file_name[0])}")
                 self.statusbar_main.showMessage(f"Updated Image Saved: {str(file_name[0])}")
@@ -1276,7 +1244,6 @@ class midasWindow(QtWidgets.QMainWindow):
 
     def getLivePlotData(self):
         try:
-
             data = np.squeeze([c.getData() for c in self.spectrum_view.plotItem.curves])
             # print(np.shape(data))
             if data.ndim == 2:
@@ -1346,14 +1313,12 @@ class midasWindow(QtWidgets.QMainWindow):
         )
 
         if file_name[0]:
-
             pd.DataFrame(self.xanesNormParam, index=[0]).to_csv(file_name[0])
 
         else:
             pass
 
     def importNormParams(self):
-
         file_name = QtWidgets.QFileDialog().getOpenFileName(
             self, "Open a XANES Norm File", "", "csv file(*csv);;all_files (*)"
         )
@@ -1438,7 +1403,6 @@ class midasWindow(QtWidgets.QMainWindow):
             pass
 
     def save_disp_spec(self):
-
         exporter = pg.exporters.CSVExporter(self.spectrum_view.plotItem)
         exporter.parameters()["columnMode"] = "(x,y,y,y) for all plots"
         file_name = QFileDialog().getSaveFileName(self, "save spectrum", "", "spectra (*csv)")
@@ -1462,7 +1426,6 @@ class midasWindow(QtWidgets.QMainWindow):
         logger.info("Process complete")
 
     def calc_comp_(self):
-
         logger.info("Process started..")
 
         # self.update_stack()
@@ -1499,7 +1462,6 @@ class midasWindow(QtWidgets.QMainWindow):
         self.threadpool.start(worker)
 
     def clustering_(self):
-
         logger.info("Process started..")
         # self.update_stack()
         method_ = self.cb_clust_method.currentText()
@@ -1526,7 +1488,6 @@ class midasWindow(QtWidgets.QMainWindow):
         self.efilePath = file_name[0]
 
     def fast_xanes_fitting(self):
-
         self._new_window5 = XANESViewer(self.displayedStack, self.xdata, self.refs, self.ref_names)
         self._new_window5.show()
 
@@ -1798,7 +1759,6 @@ class ClusterViewer(QtWidgets.QMainWindow):
     def save_clust_data(self):
         file_name = QFileDialog().getSaveFileName(self, "", "", "data(*tiff *tif *txt *png )")
         if file_name[0]:
-
             tf.imsave(
                 str(file_name[0]) + "_cluster.tiff", np.float32(self.decon_images.transpose(0, 2, 1)), imagej=True
             )
@@ -1914,7 +1874,6 @@ class XANESViewer(QtWidgets.QMainWindow):
         self.hsb_chem_map.setMaximum(self.decon_ims.shape[-1] - 1)
 
     def display_image_data(self):
-
         self.image_view.setImage(self.im_stack[self.hsb_xanes_stk.value()])
         self.image_view.ui.menuBtn.hide()
         self.image_view.ui.roiBtn.hide()
@@ -1926,7 +1885,6 @@ class XANESViewer(QtWidgets.QMainWindow):
         self.image_view_maps.ui.roiBtn.hide()
 
     def display_references(self):
-
         self.inter_ref = interploate_E(self.refs, self.xdata)
         self.plt_colors = ["c", "m", "y", "w"] * 10
         self.spectrum_view_refs.addLegend()
@@ -1969,7 +1927,6 @@ class XANESViewer(QtWidgets.QMainWindow):
         self.re_fit_xanes()
 
     def update_spectrum(self):
-
         self.roi_img = self.image_roi.getArrayRegion(self.im_stack, self.image_view.imageItem, axes=(1, 2))
         sizex, sizey = self.roi_img.shape[1], self.roi_img.shape[2]
         posx, posy = self.image_roi.pos()
@@ -1980,7 +1937,6 @@ class XANESViewer(QtWidgets.QMainWindow):
         self.fit_method = self.cb_xanes_fit_model.currentText()
 
         if len(self.selected) != 0:
-
             self.inter_ref = interploate_E(self.refs[self.selected], self.xdata1)
             stats, coeffs = xanes_fitting_1D(
                 self.ydata1,
@@ -2007,9 +1963,7 @@ class XANESViewer(QtWidgets.QMainWindow):
         self.spectrum_view.plot(self.xdata1, self.fit_, name="Fit", pen=pen2)
 
         for n, (coff, ref, plt_clr) in enumerate(zip(coeffs, self.inter_ref, self.plt_colors)):
-
             if len(self.selected) != 0:
-
                 self.spectrum_view.plot(self.xdata1, np.dot(coff, ref), name=self.selected[1:][n], pen=plt_clr)
             else:
                 self.spectrum_view.plot(self.xdata1, np.dot(coff, ref), name="ref" + str(n + 1), pen=plt_clr)
@@ -2116,7 +2070,6 @@ class XANESViewer(QtWidgets.QMainWindow):
             pass
 
     def pg_export_spec_fit(self):
-
         exporter = pg.exporters.CSVExporter(self.spectrum_view.plotItem)
         exporter.parameters()["columnMode"] = "(x,y,y,y) for all plots"
         file_name = QFileDialog().getSaveFileName(self, "save spectrum", "", "spectrum and fit (*csv)")
@@ -2126,7 +2079,6 @@ class XANESViewer(QtWidgets.QMainWindow):
             pass
 
     def pg_export_references(self):
-
         exporter = pg.exporters.CSVExporter(self.spectrum_view_refs.plotItem)
         exporter.parameters()["columnMode"] = "(x,y,y,y) for all plots"
         file_name = QFileDialog().getSaveFileName(
@@ -2216,7 +2168,6 @@ class RefChooser(QtWidgets.QMainWindow):
         self.choosenRefsSignal.emit(self.onlyCheckedBoxes)
 
     def generateRefList(self, ref_list, maxCombo, minCombo=1):
-
         """
         Creates a list of reference combinations for xanes fitting
 
@@ -2234,7 +2185,6 @@ class RefChooser(QtWidgets.QMainWindow):
         """
 
         if not maxCombo > len(ref_list):
-
             iter_list = []
             while minCombo < maxCombo + 1:
                 iter_list += list(combinations(ref_list, minCombo))
@@ -2372,7 +2322,6 @@ class RefChooser(QtWidgets.QMainWindow):
         self.dataFrametoQTable(self.df)
 
     def enableApply(self):
-
         """ """
         self.populateChecked()
         if len(self.onlyCheckedBoxes) > 1:
@@ -2477,7 +2426,6 @@ class ScatterPlot(QtWidgets.QMainWindow):
         [rbs.clicked.connect(self.updateROIDict) for rbs in [self.rb_roi1, self.rb_roi2, self.rb_roi3]]
 
     def pg_export_correlation(self):
-
         exporter = pg.exporters.CSVExporter(self.w1)
         exporter.parameters()["columnMode"] = "(x,y,y,y) for all plots"
         file_name = QFileDialog().getSaveFileName(self, "save correlation", "", "spectrum and fit (*csv)")
@@ -2496,7 +2444,6 @@ class ScatterPlot(QtWidgets.QMainWindow):
             pass
 
     def createMask(self, ROIName):
-
         try:
             self.w1.removeItem(ROIName)
         except Exception:
@@ -2513,7 +2460,6 @@ class ScatterPlot(QtWidgets.QMainWindow):
             pass
 
     def getMaskRegion(self, ROIName, generateSeperateWindows=True):
-
         """filter scatterplot points using polylineROI region"""
 
         # Ref : https://stackoverflow.com/questions/57719303/how-to-map-mouse-position-on-a-scatterplot
@@ -2611,7 +2557,6 @@ class ScatterPlot(QtWidgets.QMainWindow):
                 pass
 
     def createCompositeScatter(self):
-
         points = []
         fitLine = []
         masks = []
@@ -2647,7 +2592,6 @@ class ScatterPlot(QtWidgets.QMainWindow):
                 self.getMaskRegion(key, generateSeperateWindows=False)
 
                 for x, y, yy in zip(self.xData, self.yData, self.yyData):
-
                     points.append(
                         {
                             "pos": (x, y),
@@ -2748,7 +2692,6 @@ class MaskedScatterPlotFit(QtWidgets.QMainWindow):
         self.statusbar.showMessage("text copied to clipboard")
 
     def pg_export_correlation(self):
-
         exporter = pg.exporters.CSVExporter(self.canvas)
         exporter.parameters()["columnMode"] = "(x,y,y,y) for all plots"
         file_name = QFileDialog().getSaveFileName(
@@ -2761,7 +2704,6 @@ class MaskedScatterPlotFit(QtWidgets.QMainWindow):
             pass
 
     def saveImage(self):
-
         file_name = QFileDialog().getSaveFileName(self, "Save image data", "image.tiff", "image file(*tiff *tif )")
         if file_name[0]:
             tf.imsave(str(file_name[0]), self.maskedImage)
@@ -2771,7 +2713,6 @@ class MaskedScatterPlotFit(QtWidgets.QMainWindow):
             pass
 
     def saveMask(self):
-
         file_name = QFileDialog().getSaveFileName(self, "Save image data", "mask.tiff", "image file(*tiff *tif )")
         if file_name[0]:
             tf.imsave(str(file_name[0]), self.mask)
@@ -2809,7 +2750,6 @@ class ComponentScatterPlot(QtWidgets.QMainWindow):
         self.pb_addALine.clicked.connect(lambda: self.createMask(Line=True))
 
     def setImageAndScatterPlot(self):
-
         try:
             self.s1.clear()
         except Exception:
@@ -2829,7 +2769,6 @@ class ComponentScatterPlot(QtWidgets.QMainWindow):
 
         points = []
         for i, j in zip(self.img1.flatten(), self.img2.flatten()):
-
             points.append(
                 {
                     "pos": (i, j),
@@ -2849,7 +2788,6 @@ class ComponentScatterPlot(QtWidgets.QMainWindow):
         self.label_im2.setText(f"PC{comp_tuple[-1]+1}")
 
     def createMask(self, Line=False):
-
         self.size = self.img1.max() / 10
         self.pos = int(self.img1.mean())
 
@@ -2864,7 +2802,6 @@ class ComponentScatterPlot(QtWidgets.QMainWindow):
             self.w1.addItem(self.lineROI)
 
         else:
-
             self.scatter_mask = pg.PolyLineROI(
                 [[0, 0], [0, self.size], [self.size, self.size], [self.size, 0]],
                 pos=(self.pos, self.pos),
@@ -2893,7 +2830,6 @@ class ComponentScatterPlot(QtWidgets.QMainWindow):
             pass
 
     def getMaskRegion(self):
-
         # Ref : https://stackoverflow.com/questions/57719303/how-to-map-mouse-position-on-a-scatterplot
 
         roiShape = self.scatter_mask.mapToItem(self.s1, self.scatter_mask.shape())
@@ -2909,7 +2845,6 @@ class ComponentScatterPlot(QtWidgets.QMainWindow):
         self.masked_img.show()
 
     def pg_export_correlation(self):
-
         exporter = pg.exporters.CSVExporter(self.w1)
         exporter.parameters()["columnMode"] = "(x,y,y,y) for all plots"
         file_name = QFileDialog().getSaveFileName(self, "save correlation", "", "spectrum and fit (*csv)")
@@ -2980,11 +2915,9 @@ class CompositeScatterPlot(QtWidgets.QMainWindow):
         self.actionBlack.triggered.connect(lambda: self.scatterViewer.setBackground("k"))
 
         with pg.BusyCursor():
-
             for arr, fitline, clr, fitClr, rname, feqn in zip(
                 self.scatterPoints, self.fitLine, self.scatterColors, self.fitColors, self.roiNames, self.fitEqns
             ):
-
                 sctrPoints = []
                 for pt in arr:
                     sctrPoints.append(
@@ -3030,7 +2963,6 @@ class CompositeScatterPlot(QtWidgets.QMainWindow):
         self.muli_color_window.show()
 
     def exportData(self):
-
         exporter = pg.exporters.CSVExporter(self.canvas)
         # exporter.parameters()['columnMode'] = '(x,y,y,y) for all plots'
         file_name = QFileDialog().getSaveFileName(self, "Save CSV Data", "scatter.csv", "image file (*csv)")
@@ -3075,7 +3007,6 @@ class MaskSpecViewer(QtWidgets.QMainWindow):
         self.actionLoad_XRF_Map.triggered.connect(self.load_xrf_map)
 
     def view_data(self):
-
         self.xanes_view.setImage(self.xanes_stack)
         self.xanes_view.ui.menuBtn.hide()
         self.xanes_view.ui.roiBtn.hide()
@@ -3150,7 +3081,6 @@ class MaskSpecViewer(QtWidgets.QMainWindow):
         self.create_mask()
 
     def apply_mask_to_xanes(self):
-
         """Generates a mask with 0 and 1 from the choosen threshold and multply with the xanes stack.
         A spectrum will be generated from the new masked stack"""
 
@@ -3263,7 +3193,6 @@ class MultiChannelWindow(QtWidgets.QMainWindow):
             self.loadAsStack()
 
     def loadMultipleImageFiles(self):
-
         filter = "TIFF (*.tiff);;TIF (*.tif)"
         QtWidgets.QFileDialog().setFileMode(QtWidgets.QFileDialog.ExistingFiles)
         # choose mutliple tiff files
@@ -3460,7 +3389,6 @@ class MultiChannelWindow(QtWidgets.QMainWindow):
         self.listWidget.setCurrentRow(editRow)
 
     def exportState(self):
-
         file_name = QtWidgets.QFileDialog().getSaveFileName(
             self, "Save Current State", "multicolor_params.json", "json file(*json)"
         )
@@ -3470,7 +3398,6 @@ class MultiChannelWindow(QtWidgets.QMainWindow):
         """
 
         if file_name[0]:
-
             with open(f"{file_name[0]}", "w") as fp:
                 json.dump(self.image_dict, fp, indent=4, cls=jsonEncoder)
 
@@ -3523,11 +3450,9 @@ def get_xrf_data(h="h5file"):
         beamline = f["xrfmap/scan_metadata"].attrs["scan_instrument_id"]
 
         try:
-
             beamline_scalar = {"HXN": 2, "SRX": 0, "TES": 0}
 
             if beamline in beamline_scalar.keys():
-
                 Io = np.array(f["xrfmap/scalers/val"])[:, :, beamline_scalar[beamline]]
                 raw_xrf_stack = np.array(f["xrfmap/detsum/counts"])
                 norm_xrf_stack = raw_xrf_stack
@@ -3781,11 +3706,9 @@ def cluster_stack(
     a, b, c = im_array.shape
 
     if method == "Correlation-Kmeans":
-
         X_cluster = correlation_kmeans(im_array, n_clusters_, correlation="Pearson")
 
     else:
-
         methods = {
             "MiniBatchKMeans": sc.MiniBatchKMeans,
             "KMeans": sc.KMeans,
@@ -4100,7 +4023,6 @@ def xanesNormalization(
 def xanesNormStack(
     e_list, im_stack, e0=7125, step=None, nnorm=2, nvict=0, pre1=None, pre2=-50, norm1=100, norm2=None
 ):
-
     en, im1, im2 = np.shape(im_stack)
     im_array = im_stack.reshape(en, im1 * im2)
     normedStackArray = np.zeros_like(im_array)
@@ -4127,7 +4049,6 @@ def xanesNormStack(
 def align_stack(
     stack_img, ref_image_void=True, ref_stack=None, transformation=StackReg.TRANSLATION, reference="previous"
 ):
-
     """Image registration flow using pystack reg"""
 
     # all the options are in one function
@@ -4146,7 +4067,6 @@ def align_stack(
 
 
 def align_simple(stack_img, transformation=StackReg.TRANSLATION, reference="previous"):
-
     sr = StackReg(transformation)
     tmats_ = sr.register_stack(stack_img, reference="previous")
     for i in range(10):
@@ -4158,7 +4078,6 @@ def align_simple(stack_img, transformation=StackReg.TRANSLATION, reference="prev
 
 
 def align_with_tmat(stack_img, tmat_file, transformation=StackReg.TRANSLATION):
-
     sr = StackReg(transformation)
     out_stk = sr.transform_stack(stack_img, tmats=tmat_file)
     return np.float32(out_stk)
@@ -4212,7 +4131,6 @@ def modifyStack(
     upScaling=False,
     binFactor=2,
 ):
-
     """A giant function to modify the stack with many possible operations.
     all the changes can be saved to a jason file as a config file. Enabling and
     distabling the sliders is a problem"""
